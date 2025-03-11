@@ -4,12 +4,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script type="text/javascript" src="./assets/main.js"></script>
+
+    <link rel="stylesheet" href="/assets/styles/main.css">
+    <link rel="stylesheet" href="/assets/styles/dropdown.css">
+
     <title>Grid Maker</title>
 </head>
 
 <body>
+    <div class="header">
+        <h1>Grid Maker</h1>
 
+        <div class="dropdown" data-open="false">
+            <button class="dropdown-trigger" type="button">Options</button>
+
+            <div class="dropdown-menu">
+                <button class="dropdown-option" type="button" onclick="">Add row</button>
+                <button class="dropdown-option" type="button" onclick="">Add column</button>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="grid"></div>
+
+    <script type="text/javascript" src="./assets/scripts/main.js"></script>
+    <script type="text/javascript" src="./assets/scripts/dropdown.js"></script>
 </body>
 
 </html>

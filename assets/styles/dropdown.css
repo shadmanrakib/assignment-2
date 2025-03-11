@@ -1,0 +1,33 @@
+.dropdown {
+    position: relative;
+}
+
+.dropdown-trigger {
+    padding: 0.5rem 2rem;
+    font-size: 1rem;
+    border: 0;
+    border-radius: 8px;
+    background-color: lightblue;
+}
+
+.dropdown-menu {
+    display: none;
+}
+
+.dropdown[data-open="true"] > .dropdown-menu {
+    display: flex;
+    position: absolute;
+    flex-direction: column;
+}
+
+.dropdown-option {
+    padding: 0.5rem 2rem;
+    font-size: 1rem;
+    border: 0;
+    background-color: whitesmoke;
+}
+
+.dropdown-menu {
+    border-radius: 12px;
+    overflow: auto;
+}
