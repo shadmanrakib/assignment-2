@@ -48,3 +48,17 @@ function addRow() {
   updateGridLayout(rows + 1, columns);
 }
 
+function addColumn() {
+  const grid = document.querySelector(".grid");
+  const style = window.getComputedStyle(grid);
+
+  const rows = Number.parseInt(style.getPropertyValue("--rows"));
+  const columns = Number.parseInt(style.getPropertyValue("--columns"));
+
+  for (let i = 0; i < rows; i++) {
+    const idx = (columns + 1) * (i + 1) - 1;
+    insertElemAtIndex(grid, createCell(), idx);
+  }
+
+  updateGridLayout(rows, columns + 1);
+}
