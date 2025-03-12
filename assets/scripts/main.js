@@ -35,30 +35,54 @@ function insertElemAtIndex(parent, element, index) {
 }
 
 function addRow() {
+  /** @type {HTMLTableElement} */
   const grid = document.querySelector(".grid");
   const style = window.getComputedStyle(grid);
 
   const rows = Number.parseInt(style.getPropertyValue("--rows"));
   const columns = Number.parseInt(style.getPropertyValue("--columns"));
 
+  const rowElem = grid.insertRow();
+  const th = document.createElement("th");
+  th.appendChild(createDeleteButton(`delete-row-${columns}`));
+  rowElem.appendChild(th);
+
   for (let i = 0; i < columns; i++) {
-    grid.appendChild(createCell());
+    rowElem.insertCell().appendChild(createCell());
   }
 
   updateGridLayout(rows + 1, columns);
 }
 
+function createDeleteButton(id) {
+  const btn = document.createElement("button");
+  btn.textContent = "Delete";
+  btn.id = id;
+  return btn;
+}
+
 function addColumn() {
+  /** @type {HTMLTableElement} */
   const grid = document.querySelector(".grid");
   const style = window.getComputedStyle(grid);
 
   const rows = Number.parseInt(style.getPropertyValue("--rows"));
   const columns = Number.parseInt(style.getPropertyValue("--columns"));
 
-  for (let i = 0; i < rows; i++) {
-    const idx = (columns + 1) * (i + 1) - 1;
-    insertElemAtIndex(grid, createCell(), idx);
+  /** @type {HTMLTableRowElement} */
+  const rowHeadElements = grid.querySelector("thead > tr");
+  const th = document.createElement("th");
+  th.appendChild(createDeleteButton(`delete-col-${columns}`));
+  rowHeadElements.appendChild(th);
+
+  /** @type {NodeListOf<HTMLTableRowElement>} */
+  const rowBodyElements = grid.querySelectorAll("tbody > tr");
+
+  for (let i = 0; i < rowBodyElements.length; i++) {
+    rowBodyElements[i].insertCell().appendChild(createCell());
   }
 
   updateGridLayout(rows, columns + 1);
 }
+
+function deleteRow() {}
