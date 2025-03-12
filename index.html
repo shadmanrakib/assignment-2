@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="/assets/styles/dropdown.css">
 
     <title>Grid Maker</title>
+
+    <script type="text/javascript" src="./assets/scripts/main.js"></script>
+    <script type="text/javascript" src="./assets/scripts/dropdown.js"></script>
 </head>
 
 <body>
@@ -16,20 +19,19 @@
         <h1>Grid Maker</h1>
 
         <div class="dropdown" data-open="false">
-            <button class="dropdown-trigger" type="button">Options</button>
+            <button class="dropdown-trigger" type="button">Add</button>
 
             <div class="dropdown-menu">
-                <button class="dropdown-option" type="button" onclick="">Add row</button>
-                <button class="dropdown-option" type="button" onclick="">Add column</button>
+                <button class="dropdown-option" type="button" onclick="addRow()">Add row</button>
+                <button class="dropdown-option" type="button" onclick="addColumn()">Add column</button>
             </div>
         </div>
     </div>
 
 
-    <div class="grid"></div>
-
-    <script type="text/javascript" src="./assets/scripts/main.js"></script>
-    <script type="text/javascript" src="./assets/scripts/dropdown.js"></script>
+    <div class="grid" style="--rows: 1; --columns: 1;">
+        <div id="cell-0" class="cell" style="--cell-color: #fff">0</div>
+    </div>
 </body>
 
 </html>
