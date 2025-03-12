@@ -17,6 +17,23 @@ function updateGridLayout(rows, columns) {
   grid.style = `--rows: ${rows}; --columns: ${columns}`;
 }
 
+function insertElemAtIndex(parent, element, index) {
+  // invalid
+  if (index > parent.children.length) {
+    return;
+  }
+
+  // If index is last position, just append
+  if (index === parent.children.length) {
+    parent.appendChild(element);
+    return;
+  }
+
+  // Insert before the element at the specified index
+  const referenceNode = parent.children[index];
+  parent.insertBefore(element, referenceNode);
+}
+
 function addRow() {
   const grid = document.querySelector(".grid");
   const style = window.getComputedStyle(grid);
@@ -30,3 +47,4 @@ function addRow() {
 
   updateGridLayout(rows + 1, columns);
 }
+
