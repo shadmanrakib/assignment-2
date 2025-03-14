@@ -102,6 +102,30 @@ function deleteRow(bodyRowIdx) {
   updateGridLayout(rows - 1, columns);
 }
 
+function deleteColumn(columnIdx) {
+  /** @type {HTMLTableElement} */
+  const grid = document.querySelector(".grid");
+  const style = window.getComputedStyle(grid);
+
+  const rows = Number.parseInt(style.getPropertyValue("--rows"));
+  const columns = Number.parseInt(style.getPropertyValue("--columns"));
+
+  /** @type {HTMLTableRowElement} */
+  const rowHeadElements = grid.querySelector("thead > tr");
+  // we add one to offset initial delete row column
+  const deleteButtonCell = rowHeadElements.cells[columnIdx + 1];
+  rowHeadElements.removeChild(deleteButtonCell);
+
+  /** @type {NodeListOf<HTMLTableRowElement>} */
+  const rowBodyElements = grid.querySelectorAll("tbody > tr");
+  for (let j = 0; j < rowBodyElements.length; j++) {
+    // we add one to offset initial delete row column
+    rowBodyElements[j].deleteCell(columnIdx + 1);
+  }
+
+  updateGridLayout(rows, columns - 1);
+}
+
 // Add this function to your JavaScript file
 function setupEventListeners() {
   const grid = document.querySelector(".grid");
@@ -115,6 +139,7 @@ function setupEventListeners() {
     const style = window.getComputedStyle(grid);
 
     const rows = Number.parseInt(style.getPropertyValue("--rows"));
+    const columns = Number.parseInt(style.getPropertyValue("--columns"));
 
     // delete row button
     if (target.classList.contains("delete-row-btn")) {
@@ -130,6 +155,24 @@ function setupEventListeners() {
       const tbody = row.parentElement;
       const rowIndex = Array.from(tbody.children).indexOf(row);
       deleteRow(rowIndex);
+    }
+
+    // delete column button
+    if (target.classList.contains("delete-col-btn")) {
+      // should not delete since theres at most (and only) one column
+      if (columns <= 1) {
+        return;
+      }
+
+      // we get the index by finding the th that is an ancestor and its
+      // position amongst other th
+      // this assumes the ancestor is always the closest
+      const cell = target.closest("th");
+      const headerRow = cell.parentElement;
+      // we need to offset the first column which is reserved for delete row buttons
+      // so we subtract by 1 to get the index excluding the first col
+      const colIndex = Array.from(headerRow.children).indexOf(cell) - 1;
+      deleteColumn(colIndex);
     }
   });
 }
