@@ -1,12 +1,13 @@
-let count = 1;
+// we keep it at one since 0 is already used by the first cell
+let cellId = 1;
 
 function createCell() {
   const elem = document.createElement("div");
   elem.className = "cell";
   elem.style = "--cell-color: #fff";
-  elem.id = `cell-${count}`;
-  elem.innerHTML = count;
-  count++;
+  elem.id = `cell-${cellId}`;
+  elem.innerHTML = cellId;
+  cellId++;
 
   return elem;
 }
@@ -44,7 +45,7 @@ function addRow() {
 
   const rowElem = grid.insertRow();
   const th = document.createElement("th");
-  th.appendChild(createDeleteButton(`delete-row-${columns}`));
+  th.appendChild(createDeleteButton(rows, "delete-row-btn"));
   rowElem.appendChild(th);
 
   for (let i = 0; i < columns; i++) {
@@ -54,10 +55,11 @@ function addRow() {
   updateGridLayout(rows + 1, columns);
 }
 
-function createDeleteButton(id) {
+function createDeleteButton(idx, className) {
   const btn = document.createElement("button");
   btn.textContent = "Delete";
-  btn.id = id;
+  btn.dataset["idx"] = idx;
+  btn.className = className;
   return btn;
 }
 
@@ -72,7 +74,7 @@ function addColumn() {
   /** @type {HTMLTableRowElement} */
   const rowHeadElements = grid.querySelector("thead > tr");
   const th = document.createElement("th");
-  th.appendChild(createDeleteButton(`delete-col-${columns}`));
+  th.appendChild(createDeleteButton(columns, "delete-col-btn"));
   rowHeadElements.appendChild(th);
 
   /** @type {NodeListOf<HTMLTableRowElement>} */
@@ -85,4 +87,53 @@ function addColumn() {
   updateGridLayout(rows, columns + 1);
 }
 
-function deleteRow() {}
+function deleteRow(bodyRowIdx) {
+  /** @type {HTMLTableElement} */
+  const grid = document.querySelector(".grid");
+  const style = window.getComputedStyle(grid);
+
+  const rows = Number.parseInt(style.getPropertyValue("--rows"));
+  const columns = Number.parseInt(style.getPropertyValue("--columns"));
+
+  // we add 1 because delete row includes the head row
+  // and we need to use an offset as a result
+  grid.deleteRow(bodyRowIdx + 1);
+
+  updateGridLayout(rows - 1, columns);
+}
+
+// Add this function to your JavaScript file
+function setupEventListeners() {
+  const grid = document.querySelector(".grid");
+
+  // Use event delegation to handle all delete button clicks
+  grid.addEventListener("click", function (event) {
+    const target = event.target;
+
+    /** @type {HTMLTableElement} */
+    const grid = document.querySelector(".grid");
+    const style = window.getComputedStyle(grid);
+
+    const rows = Number.parseInt(style.getPropertyValue("--rows"));
+
+    // delete row button
+    if (target.classList.contains("delete-row-btn")) {
+      // should not delete since theres at most (and only) one row
+      if (rows <= 1) {
+        return;
+      }
+
+      // we get the index by finding the tr that is an ancestor and its
+      // position amongst other tr
+      // this assumes the ancestor is always the closest
+      const row = target.closest("tr");
+      const tbody = row.parentElement;
+      const rowIndex = Array.from(tbody.children).indexOf(row);
+      deleteRow(rowIndex);
+    }
+  });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  setupEventListeners();
+});
