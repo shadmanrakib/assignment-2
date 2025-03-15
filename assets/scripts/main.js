@@ -183,9 +183,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function colorSelection(){
   color = document.getElementById("selectColor").value;
-  if (color != "None")
+  if (color != "None"){
     console.log(color)
-  else
-    return 0
-  
+    return color
+  }
+  else{
+    return -1
+  }  
+}
+
+function colorAll() {
+  const returnedColor = colorSelection();  
+  if (color !== -1) {
+    const cells = document.querySelectorAll('.cell');
+    
+    for (let i = 0; i < cells.length; i++) {
+      cells[i].style.backgroundColor = returnedColor;  
+    }
+  }
 }
