@@ -204,12 +204,10 @@ function colorAll() {
 }
 
 function clearAll() {
-  if (color !== -1) {
-    const cells = document.querySelectorAll('.cell');
+  const cells = document.querySelectorAll('.cell');
     
-    for (let i = 0; i < cells.length; i++) {
-      cells[i].style.backgroundColor = "white";  
-    }
+  for (let i = 0; i < cells.length; i++) {
+    cells[i].style.backgroundColor = "white";  
   }
 }
 
