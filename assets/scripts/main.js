@@ -180,3 +180,12 @@ function setupEventListeners() {
 document.addEventListener("DOMContentLoaded", () => {
   setupEventListeners();
 });
+
+function colorSelection(){
+  color = document.getElementById("selectColor").value;
+  if (color != "None")
+    console.log(color)
+  else
+    return 0
+  
+}
