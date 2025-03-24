@@ -212,3 +212,15 @@ function clearAll() {
 }
 
 
+function colorUncolored() {
+  const selectedColor = colorSelection();
+  if (selectedColor !== -1) {
+    const cells = document.querySelectorAll('.cell');
+
+    for (let i = 0; i < cells.length; i++) {
+      if ((cells[i].style.backgroundColor === "white") || (cells[i].style.backgroundColor === "")){
+        cells[i].style.backgroundColor = selectedColor;  
+      }
+    }
+  }
+}
