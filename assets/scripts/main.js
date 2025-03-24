@@ -173,6 +173,14 @@ function setupEventListeners() {
       // so we subtract by 1 to get the index excluding the first col
       const colIndex = Array.from(headerRow.children).indexOf(cell) - 1;
       deleteColumn(colIndex);
+
+
+      if (target.classList.contains['cell']){
+        const selectColor = colorSelection();
+        if (selectedColor != -1){
+          target.style.backgroundColor = selectColor;
+        }
+      }
     }
   });
 }
