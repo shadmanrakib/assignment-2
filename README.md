@@ -8,7 +8,7 @@ Group member names:
 
 [Namzul Dewan](https://github.com/NazmulD1)
 
-[Ahmed Said](?)
+[Ahmed Said](https://github.com/Ahmednyc1)
 
 [Eva Georgieva](https://github.com/bobawanna)
 
